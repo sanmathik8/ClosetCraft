@@ -96,7 +96,7 @@ export default function PaymentSuccess() {
         <button onClick={downloadPDF} className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-lg">
           Download Invoice (PDF)
         </button>
-        <button onClick={() => router.push("/your-orders")} className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg">
+        <button onClick={() => router.push("/orders")} className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg">
           Your Orders
         </button>
       </div>
