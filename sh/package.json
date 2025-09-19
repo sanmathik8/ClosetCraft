@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "next start"
   },
   "dependencies": {
     "@fontsource/great-vibes": "^5.2.8",
@@ -29,7 +28,6 @@
     "swiper": "^12.0.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.96",
@@ -37,8 +35,6 @@
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.7",
     "babel-plugin-styled-components": "^2.1.4",
-    "eslint": "^9.35.0",
-    "eslint-config-next": "15.5.0",
     "tailwindcss": "^4.3.2",
     "typescript": "^5.9.2"
   }
