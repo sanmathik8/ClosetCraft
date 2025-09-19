@@ -41,7 +41,7 @@ const BackButton = styled.button`
 
 const HeroSection = styled.section`
   position: relative;
-  background-image: url('https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?fm=jpg&w=2000');
+  background-image: url('https://plus.unsplash.com/premium_photo-1664202526559-e21e9c0fb46a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D');
   background-size: cover;
   background-position: center;
   height: 60vh;
@@ -191,7 +191,7 @@ export default function AboutPage() {
 
         <Section>
           <ImageWrapper>
-            <img src="https://images.unsplash.com/photo-1532130745449-4b3be0b25d65?fm=jpg&w=1000" alt="Fashion Story" />
+            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D" alt="Fashion Story" />
           </ImageWrapper>
           <TextWrapper>
             <h2>Our Story</h2>
@@ -209,13 +209,13 @@ export default function AboutPage() {
             </p>
           </TextWrapper>
           <ImageWrapper>
-            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?fm=jpg&w=1000" alt="Mission" />
+            <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZmFzaGlvbnxlbnwwfHwwfHx8MA%3D%3D" alt="Mission" />
           </ImageWrapper>
         </Section>
 
         <Section>
           <ImageWrapper>
-            <img src="https://images.unsplash.com/photo-1521334884684-d80222895322?fm=jpg&w=1000" alt="Team Work" />
+            <img src="https://media.istockphoto.com/id/2184718397/photo/interested-woman-chooses-clothes-to-buy-in-store-holds-hanger-with-dress-in-hands-looks-price.webp?a=1&b=1&s=612x612&w=0&k=20&c=1FiInrFOPsfgYHtwbRIgXUeT8_VNPPuPmhXjyW8NF4I=" alt="Team Work" />
           </ImageWrapper>
           <TextWrapper>
             <h2>Meet Our Team</h2>

@@ -1,10 +1,22 @@
 // pages/index.tsx
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import styled, { createGlobalStyle } from "styled-components";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { FaUserCircle } from "react-icons/fa";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import {
+  FaUserCircle,
+  FaBars,
+  FaTimes,
+  FaHome,
+  FaInfoCircle,
+  FaShoppingCart,
+  FaClipboardList,
+  FaUserPlus,
+  FaSignInAlt,
+  FaStore,
+  FaSignOutAlt
+} from "react-icons/fa";
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -22,92 +34,141 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const PremiumNavBar = styled.nav`
+/* Top Bar */
+const TopBar = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10001;
+  height: 70px;
+  z-index: 10002;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 3rem;
-  background: rgba(255, 255, 255, 0.9);
+  justify-content: center; /* keep logo centered */
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(15px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-
-  @media (max-width: 768px) {
-    padding: 1rem 1.5rem;
-  }
 `;
 
+/* Centered Logo */
 const Logo = styled.div`
   font-family: 'Great Vibes', cursive;
   font-size: 2.5rem;
-  color: #b3740f;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  color: #000; /* black text */
   cursor: pointer;
+  text-align: center;
 
   &:hover {
-    color: #d9a440;
+    color: #444;
     transform: scale(1.05);
     transition: all 0.3s ease;
   }
 `;
 
-const PremiumNavLinks = styled.div`
+/* Sidebar Toggle positioned left */
+const SidebarToggle = styled.button`
+  position: absolute;
+  left: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.7rem;
+  color: #111;
+  cursor: pointer;
   display: flex;
-  gap: 1rem;
   align-items: center;
 
-  a {
-    padding: 0.5rem 1rem;
-    border-radius: 12px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    text-decoration: none;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
+  &:hover {
+    color: #444;
   }
+`;
 
-  .explore {
-    background: linear-gradient(135deg, #ff9f43, #ff6b6b);
-    color: white;
-  }
+const Sidebar = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 320px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  z-index: 10003;
+  padding: 2rem;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #111;
 
-  .login {
-    background: #fdfdfd;
-    color: #333;
-    border: 1px solid #ddd;
+  @media (max-width: 480px) {
+    width: 100%;
   }
+`;
 
-  .register {
-    background: linear-gradient(135deg, #8e2de2, #4a00e0);
-    color: white;
-  }
+const SidebarHeader = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 2rem;
+`;
 
-  .about {
-    background: #f0f0f5;
-    color: #5d5d7a;
-  }
+const CloseButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #555;
+  cursor: pointer;
+`;
 
-  .cart {
-    background: #fff0f5;
-    color: #b4005a;
-  }
+const SidebarNav = styled.nav`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
 
-  .orders {
-    background: #f0f9ff;
-    color: #004488;
+const SidebarLink = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #333;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: #fdfdfd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  font-family: 'Montserrat', sans-serif;
+
+  &:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: #f2f2f2;
+    color: #111;
   }
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  border-top: 1px solid #eee;
+  margin-top: 2rem;
+  text-align: center;
+`;
+
+const UserAvatar = styled(FaUserCircle)`
+  font-size: 3.5rem;
+  color: #111;
+  margin-bottom: 0.5rem;
+`;
+
+const UserGreeting = styled.p`
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0.25rem 0;
+  color: #333;
 `;
 
 const Section = styled.section`
@@ -216,10 +277,10 @@ const StartButton = styled.button`
   margin-top: 1rem;
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
-  background: linear-gradient(135deg, #ff6b6b, #ff9f43);
+  background: #111;
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
@@ -235,7 +296,7 @@ const ScrollIndicator = styled.div`
   top: 0;
   left: 0;
   height: 5px;
-  background: #b3740f;
+  background: #111;
   z-index: 10000;
 `;
 
@@ -261,8 +322,7 @@ const HomePage = () => {
 
   const [loading,setLoading] = useState(true);
   const [user,setUser] = useState<{name?:string,email?:string}|null>(null);
-  const [showUserMenu,setShowUserMenu] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
 
   useEffect(()=>{
@@ -273,14 +333,6 @@ const HomePage = () => {
   useEffect(()=>{
     const storedUser = typeof window!=="undefined" && localStorage.getItem("user");
     if(storedUser) setUser(JSON.parse(storedUser));
-  },[]);
-
-  useEffect(()=>{
-    const handleClickOutside = (e:MouseEvent)=>{
-      if(menuRef.current && !menuRef.current.contains(e.target as Node)) setShowUserMenu(false);
-    };
-    document.addEventListener("mousedown",handleClickOutside);
-    return ()=>document.removeEventListener("mousedown",handleClickOutside);
   },[]);
 
   const handleLogout=()=>{
@@ -295,35 +347,66 @@ const HomePage = () => {
     <GlobalStyle />
     <ScrollIndicator style={{width:scrollWidth.get()}}/>
 
-    {/* Navbar */}
-    <PremiumNavBar>
+    {/* Top Bar */}
+    <TopBar>
+      <SidebarToggle onClick={() => setIsSidebarOpen(true)}>
+        <FaBars />
+      </SidebarToggle>
       <Logo onClick={()=>router.push("/")}>Closet Craft</Logo>
-      <PremiumNavLinks>
-        <a href="/explore" className="explore">Explore</a>
-        {!user && <>
-          <a href="/login" className="login">Login</a>
-          <a href="/register" className="register">Register</a>
-        </>}
-        <a href="/about" className="about">About Us</a>
-        <a href="/cart" className="cart">Cart</a>
-        <a href="/your-order" className="orders">Orders</a>
-        {user && <div ref={menuRef} style={{position:"relative"}}>
-          <FaUserCircle size={28} style={{cursor:"pointer"}} onClick={()=>setShowUserMenu(p=>!p)}/>
-          {showUserMenu && <div style={{
-            position:"absolute",top:"120%",right:0,
-            background:"white",boxShadow:"0 4px 12px rgba(0,0,0,0.1)",
-            padding:"1rem",borderRadius:"10px",minWidth:"160px", zIndex:10000
-          }}>
-            <p style={{marginBottom:"0.5rem"}}>👋 {user.name||user.email}</p>
-            <a href="/cart" style={{display:"block",marginBottom:"0.5rem",color:"#333"}}>🛒 My Cart</a>
-            <button onClick={handleLogout} style={{
-              width:"100%", background:"#111", color:"white", padding:"0.5rem",
-              border:"none",borderRadius:"5px", cursor:"pointer", fontSize:"0.9rem"
-            }}>Logout</button>
-          </div>}
-        </div>}
-      </PremiumNavLinks>
-    </PremiumNavBar>
+    </TopBar>
+
+    {/* Sidebar */}
+    <AnimatePresence>
+      {isSidebarOpen && (
+        <Sidebar
+          initial={{ x: "-100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "-100%" }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        >
+          <SidebarHeader>
+            <CloseButton onClick={() => setIsSidebarOpen(false)}><FaTimes /></CloseButton>
+          </SidebarHeader>
+
+          <SidebarNav>
+            <SidebarLink href="/explore" onClick={() => setIsSidebarOpen(false)}>
+              <FaStore /> Explore
+            </SidebarLink>
+            <SidebarLink href="/" onClick={() => setIsSidebarOpen(false)}>
+              <FaHome /> Home
+            </SidebarLink>
+            <SidebarLink href="/about" onClick={() => setIsSidebarOpen(false)}>
+              <FaInfoCircle /> About Us
+            </SidebarLink>
+            <SidebarLink href="/cart" onClick={() => setIsSidebarOpen(false)}>
+              <FaShoppingCart /> My Cart
+            </SidebarLink>
+            <SidebarLink href="/orders" onClick={() => setIsSidebarOpen(false)}>
+              <FaClipboardList /> My Orders
+            </SidebarLink>
+          </SidebarNav>
+
+          {user ? (
+            <UserInfo>
+              <UserAvatar />
+              <UserGreeting>👋 {user.name || user.email}</UserGreeting>
+              <StartButton onClick={handleLogout} style={{ marginTop: "1rem" }}>
+                <FaSignOutAlt /> Logout
+              </StartButton>
+            </UserInfo>
+          ) : (
+            <UserInfo>
+              <SidebarLink href="/login" onClick={() => setIsSidebarOpen(false)}>
+                <FaSignInAlt /> Login
+              </SidebarLink>
+              <SidebarLink href="/register" onClick={() => setIsSidebarOpen(false)}>
+                <FaUserPlus /> Register
+              </SidebarLink>
+            </UserInfo>
+          )}
+        </Sidebar>
+      )}
+    </AnimatePresence>
 
     {/* Section 1 */}
     <Section>

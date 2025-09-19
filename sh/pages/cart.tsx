@@ -29,7 +29,9 @@ const CartPage: NextPage = () => {
       <div className="min-h-screen flex flex-col items-center justify-center text-center p-6">
         <ShoppingCart size={64} className="text-gray-400 mb-4" />
         <h1 className="text-2xl font-semibold text-gray-800">Your Cart is Empty</h1>
-        <p className="text-gray-500 mt-2">Looks like you haven’t added anything yet.</p>
+        <p className="text-gray-500 mt-2">
+          Looks like you haven’t added anything yet.
+        </p>
         <Link
           href="/"
           className="mt-6 px-6 py-3 bg-pink-500 text-white rounded-lg font-medium shadow hover:bg-pink-600 transition"
@@ -91,7 +93,9 @@ const CartPage: NextPage = () => {
 
         {/* Order Summary */}
         <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-md">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Order Summary
+          </h2>
           <div className="flex justify-between mb-2 text-gray-700">
             <span>Total Items</span>
             <span>{cart.length}</span>
@@ -100,7 +104,10 @@ const CartPage: NextPage = () => {
             <span>Total Price</span>
             <span>
               ₹
-              {cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0)}
+              {cart.reduce(
+                (sum, item) => sum + item.price * (item.quantity || 1),
+                0
+              )}
             </span>
           </div>
           <button
@@ -109,6 +116,22 @@ const CartPage: NextPage = () => {
           >
             Buy All
           </button>
+
+          {/* Extra navigation buttons */}
+          <div className="mt-6 flex flex-col gap-3">
+            <Link
+              href="/"
+              className="w-full text-center bg-gray-100 text-gray-700 py-3 rounded-lg font-medium shadow hover:bg-gray-200 transition"
+            >
+              🏠 Back to Home
+            </Link>
+            <Link
+              href="/explore"
+              className="w-full text-center bg-gray-100 text-gray-700 py-3 rounded-lg font-medium shadow hover:bg-gray-200 transition"
+            >
+              🔎 Explore More
+            </Link>
+          </div>
         </div>
       </div>
     </div>
